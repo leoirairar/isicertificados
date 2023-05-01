@@ -1,0 +1,146 @@
+@page {
+    margin: 0px;
+    /* size: a4 landscape;  */
+}
+
+body {
+    /* width: 1122px; */
+    /* height: 791px; */
+    font-size: 125%;
+    font-family: Calibri, sans-serif;
+    color: #595b61;
+    margin: 0px;
+}
+
+img {
+    max-width: 100%;
+    margin: 0;
+}
+
+#imageBackground {
+    position: absolute;
+}
+
+#userInfoP {
+    position: absolute;
+    top: 220px;
+    width: 80%;
+    text-align: center;
+}
+
+#content {
+    position: absolute;
+    top: 315px;
+    width: 80%;
+}
+
+#course {
+    position: relative;
+    top: 295px;
+    text-align: center;
+    color: #ff522e;
+    text-decoration: #ff522e;
+    font-weight: bold;
+    font-size: 32px;
+    margin-left: 70px;
+}
+
+#duration {
+    position: absolute;
+    top: 335px;
+}
+
+#expeditionDate {
+    position: absolute;
+    top: 345px;
+}
+
+#literalExpedition {
+    position: absolute;
+    top: 560px;
+    width: 50%;
+    text-align: center;
+}
+
+#template p {
+    left: 55%;
+    transform: translateX(-50%);
+}
+
+#certificateCode {
+    position: absolute;
+    top: 215px;
+    width: 99%;
+    font-size: 15px;
+    left: 45px;
+}
+
+#supervisorName {
+    position: absolute;
+    bottom: 265px;
+    left: 275px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 100%;
+}
+
+#supervisorLicenseNumber {
+    position: absolute;
+    bottom: 230px;
+    left: 275px;
+    text-align: center;
+    font-size: 100%;
+}
+
+#supervisorPosition {
+    position: absolute;
+    bottom: 248px;
+    left: 275px;
+    text-align: center;
+    font-size: 100%;
+}
+
+#instructorName {
+    position: absolute;
+    bottom: 265px;
+    left: 700px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 100%;
+}
+
+#instructorLicenseNumber {
+    position: absolute;
+    bottom: 230px;
+    left: 700px;
+    text-align: center;
+    font-size: 100%;
+}
+
+#instructorPosition {
+    position: absolute;
+    bottom: 248px;
+    left: 700px;
+    text-align: center;
+    font-size: 100%;
+}
+
+#signatureSupervisor {
+    position: fixed;
+    bottom: 375px;
+    left: 290px;
+    width: 180px;
+}
+
+#signatureInstructor {
+    position: fixed;
+    bottom: 375px;
+    left: 730px;
+    width: 180px;
+}
+
+#aprobeText {
+    position: absolute;
+    top: 270px;
+    left: 140px;
+}

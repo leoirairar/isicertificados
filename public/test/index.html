@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Examen de validación ISI</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+    <div class="container text-center" style="border: 1px solid #ccc; border-radius: 5px; margin: 30px auto;padding: 25px;">
+        <h2 class="center">Preguntas</h2>
+
+        <div class="question">
+            <h3 id="title">Pregunta 1</h3>
+            <ul style="max-width: 400px;text-align: left;margin: auto;">
+                <p><label><input type="radio" name="res" id="res1R"> <span id="res1"> Respuesta 1</span></label></p>
+                <p><label><input type="radio" name="res" id="res2R"> <span id="res2"> Respuesta 2</span></label></p>
+                <p><label><input type="radio" name="res" id="res3R"> <span id="res3"> Respuesta 3</span></label></p>
+                <p><label><input type="radio" name="res" id="res4R"> <span id="res4"> Respuesta 4</span></label></p>
+            </ul>
+            <p id="right" class="alert alert-success">Respuesta correcta</p>
+            <p id="wrong" class="alert alert-danger">Respuesta incorrecta</p>
+        </div>
+        <button class="btn btn-info" id="btn_next">Siguiente</button>
+    </div>
+    <script>
+        var id = 0;
+        var qs = {
+            1: {
+                title: "¿Dónde está ubicado el punto de encuentro?",
+                op1: "En la oficina", 
+                op2: "En la cancha de fútbol", 
+                op3: "En el campo de entrenamiento", 
+                op4: "En el salón",
+                a: 2
+            },
+            2: {
+                title: "¿Cómo se identifican los brigadistas?",
+                op1: "Con chaleco", 
+                op2: "Tienen Manillas", 
+                op3: "Las personas de la oficina", 
+                op4: "No hay" ,
+                a: 1
+            },
+            3: {
+                title: "¿Qué elementos se utilizan para izar en alturas?",
+                op1: "Gorro, arnés, eslinga", 
+                op2: "EPP y arnés, conectores, punto de anclaje y plan de rescate", 
+                op3: "Arnés y plan de rescate", 
+                op4: "Equipo de alturas"  ,
+                a: 2
+            },
+            4: {
+                title: "¿Quién debe autorizar el permiso?",
+                op1: "El trabajador", 
+                op2: "El jefe inmediato", 
+                op3: "El coordinador de alturas", 
+                op4: "El vigía"  ,
+                a: 3
+            },
+            5: {
+                title: "¿En una emergencia qué debe hacer?",
+                op1: "Conservar la calma y seguir a los brigadistas", 
+                op2: "Correr y evacuar", 
+                op3: "Seguir la brigada de emergencia", 
+                op4: "Identifcar los extintores"  ,
+                a: 1
+            },
+        };
+        var btn = document.getElementById("btn_next");
+        var title = document.getElementById("title");
+        var res1 = document.getElementById("res1");
+        var res2 = document.getElementById("res2");
+        var res3 = document.getElementById("res3");
+        var res4 = document.getElementById("res4");
+
+        var right = document.getElementById("right");
+        var wrong = document.getElementById("wrong");
+
+        (function(){
+            btn.addEventListener("click", function(){
+                checkQuestion();
+                btn.disabled = true;
+                setTimeout(
+                loadQuestion, 2000);
+            });
+            loadQuestion();
+        })();
+
+        function loadQuestion(){
+            id++;
+            if(id > 5){
+                id = 1;
+            }
+            title.innerHTML = qs[id].title;
+            res1.innerHTML = qs[id].op1;
+            res2.innerHTML = qs[id].op2;
+            res3.innerHTML = qs[id].op3;
+            res4.innerHTML = qs[id].op4;
+            btn.disabled = false;
+
+            right.style.display = "none";
+            wrong.style.display = "none";
+        }
+        function checkQuestion(){
+            var res = qs[id].a;
+            var radio = document.getElementById("res"+res+"R");
+            if(radio.checked){
+                right.style.display = "block";
+            }else{
+                wrong.style.display = "block";
+            }
+            //console.log(radio.checked);
+        }
+    </script>
+</body>
+</html>

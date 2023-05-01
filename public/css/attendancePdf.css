@@ -1,0 +1,98 @@
+@page {
+    margin: 0px;
+    /* size: a4 landscape;  */
+}
+
+body {
+    /* width: 1122px; */
+    /* height: 791px; */
+    font-size: 125%;
+    font-family: Calibri, sans-serif;
+    color: #595b61;
+    margin: 0px;
+}
+
+img {
+    max-width: 100%;
+    margin: 0;
+}
+
+#imageBackground {
+    position: absolute;
+    padding-left: 0%;
+}
+
+#userName {
+    position: absolute;
+    top: 295px;
+    left: 286px;
+    font-size: 18px;
+    color: black;
+}
+
+#attendance {
+    position: absolute;
+    top: 297px;
+    left: 465px;
+    font-size: 18px;
+    color: black;
+}
+
+#course {
+    position: relative;
+    top: 350px;
+    text-align: center;
+    color: #ff5e00;
+    text-decoration: #ff5e00;
+    font-weight: bold;
+    font-size: 160%;
+    margin-left: 0px;
+}
+
+#duration {
+    position: absolute;
+    top: 404px;
+    left: 516px;
+    font-size: 14px;
+    color: black;
+}
+
+#expeditionDate {
+    position: absolute;
+    top: 425px;
+    left: 315px;
+    font-size: 18px;
+    color: black;
+}
+
+#expeditionLiteralDate {
+    position: absolute;
+    top: 450px;
+    left: 445px;
+    font-size: 18px;
+    color: black;
+}
+
+#signature {
+    position: absolute;
+    top: 525px;
+    left: 445px;
+    width: 200px;
+}
+
+#instructor {
+    position: absolute;
+    top: 615px;
+    left: 381px;
+    font-size: 17px;
+    font-weight: bold;
+    color: black;
+}
+
+#position {
+    position: absolute;
+    top: 632px;
+    left: 381px;
+    font-size: 17px;
+    color: black;
+}

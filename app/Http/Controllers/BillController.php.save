@@ -1,0 +1,128 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\EmployeeEnrollment;
+use App\Bill;
+Use Alert;
+
+class BillController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $payedBills = Bill::where('payment_status',1)->with('employeeEnrollment.employee.user','employeeEnrollment.courseProgramming.course')->get();
+        $unpaidBills = Bill::where('payment_status',0)->with('employeeEnrollment.employee.user','employeeEnrollment.courseProgramming.course')->get();
+
+        return view('showBills',compact('payedBills','unpaidBills'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $employeesEnrollment = EmployeeEnrollment::doesntHave('bill')->with('employee.user','courseProgramming.course')->get();
+       
+ return view('insertBill',compact('employeesEnrollment'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'payment'=>'required',
+            'billSerial'=>'required',
+            'enrollmentId'=>'required',
+            'paymentStatus'=>'required',
+            'paymentDay'=>'',
+        ]);
+
+        Bill::create([
+            'enrollments_id'=>$data['enrollmentId'],
+            'payment'=>$data['payment'],
+            'bill_serial'=>$data['billSerial'],
+            'payment_day'=> isset($data['paymentDay'])?$data['paymentDay']:null,
+            'payment_status'=>$data['paymentStatus'],
+        ]);
+
+        
+        return redirect()->action('BillController@index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $employeesEnrollment = EmployeeEnrollment::orderby('id')->with('employee.user','courseProgramming.course')->get();
+        $bill = Bill::where('id',$id)->with('employeeEnrollment.employee.user','employeeEnrollment.courseProgramming.course')->first();
+        return view('updateBill',compact('bill','employeesEnrollment'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'payment'=>'required',
+            'billSerial'=>'required',
+            'enrollmentId'=>'required',
+            'paymentStatus'=>'required',
+            'paymentDay'=>'',
+        ]);
+
+        $bill = Bill::where('id',$id)->first();
+
+        $bill->payment = $data['payment'];
+        $bill->billSerial = $data['billSerial'];
+        $bill->enrollmentId = $data['enrollmentId'];
+        $bill->paymentStatus = $data['paymentStatus'];
+        $bill->paymentDay = isset($data['paymentDay'])?$data['paymentDay']:null;
+        $bill->save();
+
+        return redirect()->action('BillController@index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}
