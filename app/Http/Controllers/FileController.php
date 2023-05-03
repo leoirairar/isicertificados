@@ -67,11 +67,23 @@ class FileController extends Controller
     public function importCSV($filePath)
     {
         $rows = Excel::toCollection([], $filePath)[0]; // Leer el archivo y obtener las filas como una colección
-        
+        $importedIds = []; // Array para almacenar los identification_number ya importados
+        $duplicateCount = 0;
     if (count($rows) > 30) {
         return redirect()->back()->with('error',"Error: El documento solo puede contener 30 personas.");
     }
         foreach ($rows as $row) {
+            $identificationNumber = $row[7];
+            if (in_array($identificationNumber, $importedIds)) {
+                $duplicateCount++; // Incrementar el contador de duplicados
+                continue; // Pasar al siguiente registro sin guardarlo
+            }
+            // Verificar si el identification_number ya existe en la base de datos
+            $existingUser = User::where('identification_number', $identificationNumber)->first();
+            if ($existingUser) {
+                $duplicateCount++; // Incrementar el contador de duplicados
+                continue; // Pasar al siguiente registro sin guardarlo
+            }
             $data_user = [
                 'name' => !empty($row[6]) ? $row[6] : 'Sin nombre',
                 'last_name' => '',
@@ -110,8 +122,8 @@ class FileController extends Controller
 
                 $employee->save();
 
-        }
-    }
+        
+    }}
     }
     
     
