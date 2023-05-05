@@ -121,7 +121,7 @@ class FileController extends Controller
                 $employee->user_id = $user_id;
                 $employee->company_id = $companyId ?: 0;
                 $employee->birthdate =  $row[8] ?: null;
-                $employee->academy_degree_id  = $row[10] ?: null;
+                $employee->academy_degree_id  = $row[10] ?: 0;
                 $employee->emergency_contact_name  = $row[23] ?: null;
                 $employee->emergency_phone_number = $row[24] ?: null;
                 $employee->position =  $row[22] ?: null;
