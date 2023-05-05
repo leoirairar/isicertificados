@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Files;
 use App\Employee;
 use App\User;
+use App\Company;
 use Auth;
 use Illuminate\Support\Str;
     use Illuminate\Support\Facades\Storage;
@@ -109,17 +110,22 @@ class FileController extends Controller
 
             // Obtener el user_id del usuario creado
             $user_id = $user->id;
-            if($user_id!=null){         
+            if($user_id!=null){  
+                $companyName = $row[4];
+                // Buscar el ID de la compañía por el nombre
+                $companyId = Company::whereRaw('LOWER(TRIM(company_name)) LIKE ?', [Str::lower(trim($companyName))])
+                ->whereNull('deleted_at')
+                ->value('id');
+                 // Verificar si se encontró la compañía en la base de datos
                 $employee = new Employee;
                 $employee->user_id = $user_id;
-                $employee->company_id =  $row[1] ?: 0;
+                $employee->company_id = $companyId ?: 0;
                 $employee->birthdate =  $row[8] ?: null;
                 $employee->academy_degree_id  = $row[10] ?: null;
                 $employee->emergency_contact_name  = $row[23] ?: null;
                 $employee->emergency_phone_number = $row[24] ?: null;
                 $employee->position =  $row[22] ?: null;
                 $employee->sector_economico = null;
-
                 $employee->save();
 
         
