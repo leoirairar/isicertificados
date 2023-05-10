@@ -20,13 +20,11 @@ class FileController extends Controller
     }
 
 
-    
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls|max:1024',
-            'file_name' => 'required|string|max:100',
-            'file_path' => 'required|string|max:100',
+            'file' => 'required|mimes:xlsx,xls',
+
         ]);
     
         $file = $request->file('file');
@@ -42,11 +40,12 @@ class FileController extends Controller
     
         // Separar el nombre original del archivo y la extensión
         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $truncatedName = Str::limit($originalName, 30, '');
         $extension = $file->getClientOriginalExtension();
     
         // Generar el nombre del archivo con el código, nombre original y fecha
-        $fileName = $code . '-' . $originalName . '-' . Carbon::now()->format('YmdHis') . '.' . $extension;
-    
+        $fileName = $code . '-' . $truncatedName . '-'  . $extension;
+
         // Guardar el archivo en el almacenamiento
         $file->storeAs('public/files', $fileName);
     
@@ -59,6 +58,7 @@ class FileController extends Controller
         $uploadedFile->save();
         return redirect()->back()->with('success', 'Archivo subido exitosamente.');
     }
+    
     
     
     public function download($id)
