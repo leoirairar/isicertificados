@@ -14,7 +14,13 @@ use Illuminate\Support\Str;
     use Illuminate\Support\Carbon;
 
 class FileController extends Controller
-{
+{   
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function uploadForm()
     {
         $files = Files::where('employee_id', '16666667')->get();
