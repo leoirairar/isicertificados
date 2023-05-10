@@ -274,3 +274,5 @@ Route::any('/getAttendaceCertificateViewWeb', 'CourseCertificateController@getAt
 Route::get('/upload', 'FileController@uploadForm')->name('file.upload.form');
 Route::post('/upload', 'FileController@upload')->name('file.upload');
 Route::get('files/download/{id}', 'FileController@download')->name('files.download');
+Route::delete('/files/{id}', 'FileController@delete')->name('files.delete');
+

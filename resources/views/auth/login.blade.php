@@ -6,6 +6,24 @@
     <div class="row justify-content-center" style="margin-top:10rem">
         <div class="col-md-7">
             <div class="card">
+                <div class="noti-wrap">
+                    <div class="noti__item js-item-menu" style="display: none;">
+                        <i class="fas fa-bell"></i>
+                        <span class="quantity " id="notifyQuantity"></span>
+                        <div class="notifi-dropdown js-dropdown">
+                            <div id="notificationsContent">
+                                <div class="notifi__title" id="notifytitle">
+                                </div>
+                                <div class="container" id="notifyContent">
+
+                                </div>
+                            </div>
+                            <div class="notifi__footer">
+                                <a href="{{ url('/notifications') }}">Todas las notificaciones</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-header" style="font-weight: bold">
                     {{ __('Inicio de sesión') }}
                 </div>

@@ -24,7 +24,9 @@ class FileController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xls,xlsx'
+            'file' => 'required|mimes:xlsx,xls|max:1024',
+            'file_name' => 'required|string|max:100',
+            'file_path' => 'required|string|max:100',
         ]);
     
         $file = $request->file('file');
@@ -77,8 +79,28 @@ class FileController extends Controller
             // Aquí puedes manejar el error o redirigir a una página de error
             return back()->withError($error_message)->withInput();
         }
+        
     }
     
+    public function delete($id)
+    {
+        try {
+            $file = Files::findOrFail($id);
+            $file_path = storage_path('app/' . $file->fileroute);
+    
+            if (file_exists($file_path)) {
+                unlink($file_path); // Eliminar el archivo del almacenamiento
+            }
+    
+            $file->delete(); // Eliminar la entrada en la base de datos
+    
+            return redirect()->back()->with('success', 'Archivo eliminado exitosamente.');
+        } catch (\Throwable $th) {
+            $error_message = "Ha ocurrido un problema: " . $th->getMessage();
+            // Aquí puedes manejar el error o redirigir a una página de error
+            return back()->withError($error_message)->withInput();
+        }
+    }
     
 
 }
