@@ -12,7 +12,16 @@ if (document.getElementById('documentsBycourse')) {
 
 
 $(document).ready(function() {
-
+    $(document).ready(function() {
+        $('#files-table').DataTable({
+            "order": [[ 1, "desc" ]],
+            "paging": true,
+            "pageLength": 10,
+            "language": {
+                url: '../js/locales/Spanish.json'
+            }
+        });
+    });
     $("#company").select2();
 
     setTimeout(function() {

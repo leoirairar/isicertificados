@@ -99,16 +99,4 @@
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/app/employee.js') }}"></script>
     <script src="{{ asset('js/app/general.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#files-table').DataTable({
-                "order": [[ 1, "desc" ]],
-                "paging": true,
-                "pageLength": 10,
-                "language": {
-                    url: '../js/locales/Spanish.json'
-                }
-            });
-        });
-    </script>
 @endsection
