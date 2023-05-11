@@ -271,3 +271,6 @@ Route::any('/getAttendaceCertificateViewWeb', 'CourseCertificateController@getAt
 //  $date = Carbon::create($pieces[4],$month+1, $pieces[0]);
 //     return $date->toDateString();
 // });
+Route::get('/upload', 'FileController@uploadForm')->name('file.upload.form');
+Route::post('/upload', 'FileController@upload')->name('file.upload');
+Route::get('files/download/{id}', 'FileController@download')->name('files.download');
