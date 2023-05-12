@@ -48,7 +48,7 @@ class FileController extends Controller
         // Generar el nombre del archivo con el código, nombre original y fecha
         $fileName = $code . '-' . $truncatedName . '.'. $extension;
         if ($extension !== 'csv') {
-            return redirect()->back()->with('error', "Error: Extensión de archivo inválida. Por favor, asegúrate de seleccionar un archivo CSV.");
+            return redirect()->back()->with('error', "Extensión de archivo inválida o el tamaño es muy grande (máximo 30 personas). Por favor, asegúrate de seleccionar un archivo CSV.");
         }
         // Guardar el archivo en el almacenamiento
         $file->storeAs('public/files', $fileName);
