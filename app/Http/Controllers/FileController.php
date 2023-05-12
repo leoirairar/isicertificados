@@ -69,7 +69,7 @@ class FileController extends Controller
         $rows = Excel::toCollection([], $filePath)[0]; // Leer el archivo y obtener las filas como una colección
         
     if (count($rows) > 30) {
-        return redirect()->back()->with('error', "Error: Extensión de archivo inválida. Por favor, asegúrate de seleccionar un archivo CSV.");
+        return redirect()->back()->with('error',"Error: El documento solo puede contener 30 personas.");
     }
         foreach ($rows as $row) {
             $data_user = [
