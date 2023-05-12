@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Files;
 use App\Employee;
-use App\user;
+use App\User;
 use Auth;
 use Illuminate\Support\Str;
     use Illuminate\Support\Facades\Storage;
@@ -25,7 +25,7 @@ class FileController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-        
+            'file' => 'required',
 
         ]);
     
