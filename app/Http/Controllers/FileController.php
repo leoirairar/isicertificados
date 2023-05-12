@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Files;
+use App\Employee;
+use App\user;
 use Auth;
 use Illuminate\Support\Str;
     use Illuminate\Support\Facades\Storage;
@@ -23,7 +25,7 @@ class FileController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls',
+        
 
         ]);
     
@@ -44,8 +46,10 @@ class FileController extends Controller
         $extension = $file->getClientOriginalExtension();
     
         // Generar el nombre del archivo con el código, nombre original y fecha
-        $fileName = $code . '-' . $truncatedName . '-'  . $extension;
-
+        $fileName = $code . '-' . $truncatedName . '.'. $extension;
+        if ($extension !== 'csv') {
+            return redirect()->back()->with('error', "Error: Extensión de archivo inválida. Por favor, asegúrate de seleccionar un archivo CSV.");
+        }
         // Guardar el archivo en el almacenamiento
         $file->storeAs('public/files', $fileName);
     
@@ -56,9 +60,59 @@ class FileController extends Controller
         $uploadedFile->file_id = $newFileId;
         $uploadedFile->fileroute = 'public/files/' . $fileName; // Guardar la ruta del archivo
         $uploadedFile->save();
+
+        $this->importCSV($uploadedFile->fileroute);
         return redirect()->back()->with('success', 'Archivo subido exitosamente.');
     }
-    
+    public function importCSV($filePath)
+    {
+        $rows = Excel::toCollection([], $filePath)[0]; // Leer el archivo y obtener las filas como una colección
+        
+    if (count($rows) > 30) {
+        return redirect()->back()->with('error', "Error: Extensión de archivo inválida. Por favor, asegúrate de seleccionar un archivo CSV.");
+    }
+        foreach ($rows as $row) {
+            $data_user = [
+                'name' => !empty($row[6]) ? $row[6] : 'Sin nombre',
+                'last_name' => '',
+                'identification_number' => !empty($row[7]) ? $row[7] : 'No se proporcionó',
+                'document_type' => 'CC',
+                'email' => null,
+                'phone_number' => !empty($row[25]) ? $row[25] : 'No se proporcionó',
+                'email_verified_at' => null,
+                'password' => null,
+                'role' => 'E',
+                'remember_token' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'deleted_at' => null,
+                'literacy_level' => !empty($row[16]) ? $row[16] : 'No se proporcionó',
+                'hemo_classification' => !empty($row[14]) ? $row[14] : 'No se proporcionó',
+                'allergies' => !empty($row[18]) ? $row[18] : 'No se proporcionó',
+                'recent_medication_use' => null,
+                'recent_Injuries' => null,
+                'current_diseases' => null,
+            ];
+            $user = User::create($data_user);
+
+            // Obtener el user_id del usuario creado
+            $user_id = $user->id;
+            if($user_id!=null){         
+                $employee = new Employee;
+                $employee->user_id = $user_id;
+                $employee->company_id =  $row[1] ?: 0;
+                $employee->birthdate =  $row[8] ?: null;
+                $employee->academy_degree_id  = $row[10] ?: null;
+                $employee->emergency_contact_name  = $row[23] ?: null;
+                $employee->emergency_phone_number = $row[24] ?: null;
+                $employee->position =  $row[22] ?: null;
+                $employee->sector_economico = null;
+
+                $employee->save();
+
+        }
+    }
+    }
     
     
     public function download($id)

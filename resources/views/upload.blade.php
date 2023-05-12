@@ -94,30 +94,26 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#uploadForm" aria-expanded="false" aria-controls="uploadForm">
-                                    Subir Archivo
-                                </button>
+                                <form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="file" name="file">
+                                            <label class="custom-file-label" for="file">Seleccionar archivo</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">Subir</button>
+                                        </div>
+                                    </div>
+                                    @error('file')
+                                        <div class="text-danger mt-2">{{ $message }}</div>
+                                    @enderror
+                               
+    
+                            </form>
                             </div>
                         </div>
-                        <div class="collapse mt-3" id="uploadForm">
-                            <form action="{{ route('file.upload') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="file" name="file">
-                                        <label class="custom-file-label" for="file">Seleccionar archivo</label>
-                                    </div>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit">Subir</button>
-                                    </div>
-                                </div>
-                                @error('file')
-                                    <div class="text-danger mt-2">{{ $message }}</div>
-                                @enderror
-                           
 
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>

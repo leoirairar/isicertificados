@@ -56,18 +56,18 @@
 
                 @if (Auth::user()->role == 'S' || Auth::user()->role == 'M')
                 <li class="has-sub">
-                    <a class="js-arrow" href="#">  <i class="fas  fa-folder-open"></i>Exel</a>
+                    <a class="js-arrow" href="#">  <i class="fas  fa-folder-open"></i>Excel</a>
                     <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                        <li><a class="dropdown-item" href="{{ url('/upload') }}">Exel</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/upload') }}">Registro</a></li>
                     </ul>
                 </li>
                 @endif
                 @if (Auth::user()->role == 'A')
                 <li class="has-sub">
-                    <a class="js-arrow" href="#">  <i class="fas  fa-folder-open"></i>Exel</a>
+                    <a class="js-arrow" href="#">  <i class="fas  fa-folder-open"></i>Excel</a>
 
                     <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                        <li><a class="dropdown-item" href="{{ url('/upload') }}">Exel</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/upload') }}">Registro</a></li>
                     </ul>
                 </li>
                 @endif
